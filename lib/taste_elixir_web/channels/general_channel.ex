@@ -22,9 +22,9 @@ defmodule TasteElixirWeb.GeneralChannel do
     {:reply, {:ok, payload}, socket}
   end
 
-  def handle_in("fetch:all", payload, socket) do
-    messages = Communication.list_messages
-    {:reply, {:ok, messages}, socket}
+  def handle_in("fetch:all", %{"search" => search}, socket) do
+    messages = Communication.list_messages(search)
+    {:reply, {:ok, %{messages: messages}}, socket}
   end
 
   # It is also common to receive messages from the client and

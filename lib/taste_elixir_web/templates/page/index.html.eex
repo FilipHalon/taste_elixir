@@ -1,8 +1,5 @@
+<input type="text" id="search">
 <div id='message-list' class='row'>
-  <%# z kontrolera message wyświetlamy instacje %>
-  <%= for message <- @messages do %>
-    <div><b><%= message.author %></b> <%= message.content %></div>
-  <% end %>
 </div>
 
 <div class='row form-group'>

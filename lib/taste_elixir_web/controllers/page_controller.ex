@@ -4,7 +4,6 @@ defmodule TasteElixirWeb.PageController do
   alias TasteElixir.Communication
 
   def index(conn, _params) do
-    messages = Communication.list_messages
-    render(conn, "index.html", messages: messages)
+    render(conn, "index.html")
   end
 end

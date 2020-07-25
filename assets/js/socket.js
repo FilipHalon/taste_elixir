@@ -60,6 +60,17 @@ let list    = $('#message-list');
 let message = $('#message');
 let name    = $('#name');
 
+function fetchMessages (searchString) {
+    channel.push('fetch:all', {search: searchString}).receive("ok", e => {
+    list.html('');
+    const messages = e.messages;
+    messages.forEach(message => {
+     list.append(`<div><b>${message.author || 'Anonymous'}:</b> ${message.content}</div>`);
+    });
+  });
+}
+
+
 message.on('keypress', event => {
   if (event.keyCode == 13) {
     channel.push('shout', { name: name.val(), message: message.val() });
@@ -73,7 +84,15 @@ channel.on('shout', payload => {
 });
 
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("ok", resp => {
+    fetchMessages(null)
+    console.log("Joined successfully", resp) 
+    })
   .receive("error", resp => { console.log("Unable to join", resp) })
+
+document.getElementById("search").addEventListener('input', e => {
+  const searchString = e.target.value;
+  fetchMessages(searchString);
+})
 
 export default socket

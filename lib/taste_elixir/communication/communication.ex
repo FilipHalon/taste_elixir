@@ -17,8 +17,20 @@ defmodule TasteElixir.Communication do
       [%Message{}, ...]
 
   """
-  def list_messages do
+  def list_messages(nil) do
     Repo.all(Message)
+  end
+
+  def list_messages("") do
+    Repo.all(Message)
+  end
+
+  def list_messages(search) do
+    search = "%" <> search <> "%"
+    Message 
+    # |> where([message], message.content == ^search)
+    |> where([message], ilike(message.content, ^search))
+    |> Repo.all()
   end
 
   @doc """
